@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">Paramètres de sélection</h2>
+<form method="post" class="space-y-6">
+    {% for crit in criteria_list %}
+    <div class="bg-white p-4 rounded shadow">
+        <label class="block font-medium">{{ crit.name }}</label>
+        <small class="block text-sm text-gray-600 mb-2">{{ crit.description }}</small>
+        {% if crit.name.lower() == 'budget' %}
+            <input type="number" step="0.01" name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2" placeholder="Entrez le budget maximum">
+        {% elif crit.name.lower() == 'field strength' %}
+            <select name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2">
+                <option value="">-- Sélectionnez --</option>
+                {% for s in strengths %}
+                <option value="{{ s }}">{{ s }} T</option>
+                {% endfor %}
+            </select>
+        {% elif crit.name.lower() == 'patient comfort' %}
+            <select name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2">
+                <option value="">-- Sélectionnez bore type --</option>
+                {% for b in bore_types %}
+                <option value="{{ b }}">{{ b }}</option>
+                {% endfor %}
+            </select>
+        {% elif crit.name.lower() == 'maintenance' %}
+            <input type="number" step="1" name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2" placeholder="Années minimales du contrat">
+        {% elif crit.name.lower() == 'energy efficiency' %}
+            <input type="number" step="0.1" name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2" placeholder="Consommation max (kW)">
+        {% elif crit.name.lower() == 'footprint' %}
+            <input type="number" step="0.1" name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2" placeholder="Espace disponible (m²)">
+        {% elif crit.name.lower() == 'special applications' %}
+            <input type="text" name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2" placeholder="Ex: pédiatrie, cardiologie">
+        {% else %}
+            <input type="text" name="input_{{ crit.id }}" class="mt-1 block w-full border rounded p-2">
+        {% endif %}
+        <label class="block mt-2 font-medium">Importance (poids)</label>
+        <input type="number" step="0.01" name="weight_{{ crit.id }}" class="mt-1 block w-full border rounded p-2" placeholder="Valeur relative (ex. 1)">
+    </div>
+    {% endfor %}
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Calculer recommandation</button>
+</form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">Détails du modèle</h2>
+<div class="bg-white p-4 rounded shadow">
+    <p><strong>Nom:</strong> {{ model.name }}</p>
+    <p><strong>Fournisseur:</strong> {{ model.vendor.name }} ({{ model.vendor.country }})</p>
+    <p><strong>Champ:</strong> {{ model.field_strength }} T</p>
+    <p><strong>Bore type:</strong> {{ model.bore_type }}</p>
+    <p><strong>Gradient Strength:</strong> {{ model.gradient_strength }} mT/m</p>
+    <p><strong>Cryogen Type:</strong> {{ model.cryogen_type }}</p>
+    <p><strong>Patient Table:</strong> {{ model.patient_table }}</p>
+    <p><strong>RF Coils:</strong> {{ model.rf_coils }}</p>
+    <p><strong>Software Features:</strong> {{ model.software_features }}</p>
+    <p><strong>Coût estimé:</strong> {{ model.cost_estimate }}</p>
+    <p><strong>Service Contract:</strong> {{ model.service_contract }}</p>
+    <p><strong>Consommation énergétique:</strong> {{ model.energy_consumption }} kW</p>
+    <p><strong>Footprint:</strong> {{ model.footprint }}</p>
+    <p><strong>Additional Info:</strong> {{ model.additional_info }}</p>
+</div>
+<a href="{{ url_for('results', session_id=request.args.get('session_id', 0)) }}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded">Retour</a>
+{% endblock %}

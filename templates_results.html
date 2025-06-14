@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">Résultats</h2>
+{% if recommendation %}
+<div class="bg-green-100 border border-green-400 text-green-700 p-4 rounded mb-4">
+    <strong>Recommandation :</strong> {{ recommendation.rationale }}
+</div>
+{% endif %}
+<table class="min-w-full bg-white rounded shadow mb-6">
+    <thead>
+        <tr>
+            <th class="px-4 py-2">Modèle</th>
+            <th class="px-4 py-2">Fournisseur</th>
+            <th class="px-4 py-2">Score</th>
+            <th class="px-4 py-2">Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in scores %}
+        <tr class="border-t">
+            <td class="px-4 py-2">{{ s.model.name }}</td>
+            <td class="px-4 py-2">{{ s.model.vendor.name }}</td>
+            <td class="px-4 py-2">{{ '%.2f'|format(s.score) }}</td>
+            <td class="px-4 py-2"><a href="{{ url_for('detail', model_id=s.model.id) }}" class="text-blue-600 underline">Voir</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('index') }}" class="bg-gray-600 text-white px-4 py-2 rounded">Nouvelle évaluation</a>
+{% endblock %}
