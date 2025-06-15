@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BestMRIdevice - Trouvez votre IRM idéal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ffd700;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .bg-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+
+        .hero h1 .highlight {
+            color: #ffd700;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 50px;
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #2c3e50;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.6);
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Features preview */
+        .features-preview {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Guide Page Styles */
+        .guide-page {
+            display: none;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .guide-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .guide-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .guide-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn-calculate {
+            width: 100%;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .results-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+
+        .recommendation-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .spec-value {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .score {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .score.excellent {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+
+        .score.good {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .comparison-table {
+            width: 100%;
+            grid-column: 1 / -1;
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table h2 {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-button {
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
+            
+            .features-preview {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page d'accueil -->
+    <div id="homePage">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">
+                Best<span>MRI</span>device
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <!-- Animated background elements -->
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+            <div class="bg-element"></div>
+
+            <div class="hero-content">
+                <h1>Trouvez l'<span class="highlight">IRM parfait</span> pour votre établissement</h1>
+                <p>Notre guide intelligent vous aide à choisir l'équipement IRM le mieux adapté à vos besoins spécifiques, votre budget et vos contraintes techniques.</p>
+                
+                <a href="#" class="cta-button" onclick="showGuide()">
+                    🚀 Guidez-nous
+                </a>
+            </div>
+
+            <!-- Features Preview -->
+            <div class="features-preview">
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <span>Recommandations personnalisées</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💰</span>
+                    <span>Analyse budgétaire</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Comparaison instantanée</span>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                Cliquez sur "Guidez-nous" pour commencer
+            </div>
+        </section>
+    </div>
+
+    <!-- Page de guide (cachée initialement) -->
+    <div id="guidePage" class="guide-page">
+        <div class="guide-header">
+            <button class="back-button" onclick="showHome()">← Retour</button>
+            <h1>🏥 Comparateur IRM</h1>
+            <p>Trouvez l'équipement IRM idéal selon vos besoins spécifiques</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>🔍 Critères de Sélection</h2>
+                <form id="irmForm">
+                    <div class="form-group">
+                        <label for="budget">💰 Budget approximatif (€)</label>
+                        <select id="budget">
+                            <option value="">Sélectionnez votre budget</option>
+                            <option value="low">1,3 - 1,5 M€</option>
+                            <option value="medium">1,5 - 1,6 M€</option>
+                            <option value="high">1,6 - 1,8 M€</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field">🧲 Champ magnétique souhaité</label>
+                        <select id="field">
+                            <option value="">Sélectionnez le champ</option>
+                            <option value="1.5T">1,5 Tesla</option>
+                            <option value="3T">3 Tesla</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="space">📏 Espace disponible (m²)</label>
+                        <select id="space">
+                            <option value="">Sélectionnez l'espace</option>
+                            <option value="small">< 20 m²</option>
+                            <option value="medium">20 - 25 m²</option>
+                            <option value="large">> 25 m²</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="applications">🏥 Applications principales</label>
+                        <select id="applications">
+                            <option value="">Sélectionnez vos applications</option>
+                            <option value="neuro">Neurologie / MSK / Cardiologie</option>
+                            <option value="general">Usage général / Pédiatrie</option>
+                            <option value="cardio">Cardiologie / Respiration libre</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comfort">🛏️ Priorité confort patient</label>
+                        <select id="comfort">
+                            <option value="">Sélectionnez la priorité</option>
+                            <option value="high">Très important</option>
+                            <option value="medium">Important</option>
+                            <option value="low">Moins prioritaire</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="energy">⚡ Consommation énergétique</label>
+                        <select id="energy">
+                            <option value="">Sélectionnez la priorité</option>
+                            <option value="eco">Très économique</option>
+                            <option value="standard">Standard</option>
+                            <option value="performance">Performance prioritaire</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn-calculate" onclick="calculateRecommendation()">
+                        🚀 Calculer la Recommandation
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-section">
+                <h2>📊 Recommandations</h2>
+                <div id="results">
+                    <p style="text-align: center; color: #7f8c8d; padding: 40px;">
+                        Remplissez les critères et cliquez sur "Calculer la Recommandation" pour obtenir des suggestions personnalisées.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison-table hidden" id="comparisonTable">
+            <h2>📋 Tableau Comparatif Détaillé</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paramètre</th>
+                        <th>GE SIGNA Champion 1.5T</th>
+                        <th>Siemens MAGNETOM Altea</th>
+                        <th>Siemens MAGNETOM Sola</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Budget approximatif</strong></td>
+                        <td>≈ 1,3-1,6 M€</td>
+                        <td>≈ 1,3-1,5 M€</td>
+                        <td>≈ 1,5-1,8 M€</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Champ magnétique</strong></td>
+                        <td>1,5 T</td>
+                        <td>1,5 T</td>
+                        <td>1,5 T</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Confort patient</strong></td>
+                        <td>Bore large 76cm, >50cm dégagement</td>
+                        <td>Bore 70cm, mousse standard, table fixe</td>
+                        <td>Bore 70cm, table dockable + eDrive</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contrat maintenance</strong></td>
+                        <td>GE standard 5-10 ans</td>
+                        <td>Siemens standard 5-10 ans</td>
+                        <td>Siemens 5-10 ans avec EcoPower</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consommation</strong></td>
+                        <td>≈ 15,74 kW (scan), 7,24 kW (veille)</td>
+                        <td>≈ 12-14 kW typique</td>
+                        <td>≈ 10-12 kW (EcoPower + hélium optimisé)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Espace requis</strong></td>
+                        <td>3,37 × 5,4 m (≈18,2 m²)</td>
+                        <td>≈ 18-20 m² (incluant salle technique)</td>
+                        <td>≈ 18-20 m² (configuration identique Altea)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Applications</strong></td>
+                        <td>Neuro, MSK, Cardio, Pédiatrie, Body avec AIR™ Coils</td>
+                        <td>Tim Suite, Quiet Suite, respiration libre PACE, neuro, MSK</td>
+                        <td>GRASP-VIBE, cardio free-breathing, Whole-body <30 min, SliceAdjust</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Navigation entre les pages
+        function showGuide() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('guidePage').style.display = 'block';
+        }
+
+        function showHome() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('guidePage').style.display = 'none';
+            // Reset form and results
+            document.getElementById('irmForm').reset();
+            document.getElementById('results').innerHTML = `
+                <p style="text-align: center; color: #7f8c8d; padding: 40px;">
+                    Remplissez les critères et cliquez sur "Calculer la Recommandation" pour obtenir des suggestions personnalisées.
+                </p>
+            `;
+            document.getElementById('comparisonTable').classList.add('hidden');
+        }
+
+        // Données des équipements IRM
+        const irmData = {
+            "GE SIGNA Champion 1.5T": {
+                budget: "1.3-1.6",
+                field: "1.5T",
+                comfort: "Bore large 76cm, >50cm dégagement",
+                maintenance: "GE standard 5-10 ans",
+                energy: "15.74 kW (scan), 7.24 kW (veille)",
+                space: "18.2 m²",
+                applications: "Neuro, MSK, Cardio, Pédiatrie, Body avec AIR™ Coils",
+                strengths: ["Bore le plus large (76cm)", "Excellent confort patient", "Polyvalent", "AIR™ Coils avancées"],
+                weaknesses: ["Consommation énergétique élevée", "Budget supérieur"]
+            },
+            "Siemens MAGNETOM Altea": {
+                budget: "1.3-1.5",
+                field: "1.5T",
+                comfort: "Bore 70cm, mousse standard, table fixe",
+                maintenance: "Siemens standard 5-10 ans",
+                energy: "12-14 kW typique",
+                space: "18-20 m²",
+                applications: "Tim Suite, Quiet Suite, respiration libre PACE, neuro, MSK",
+                strengths: ["Budget le plus accessible", "Consommation modérée", "Quiet Suite", "PACE respiration libre"],
+                weaknesses: ["Confort patient standard", "Table fixe"]
+            },
+            "Siemens MAGNETOM Sola": {
+                budget: "1.5-1.8",
+                field: "1.5T",
+                comfort: "Bore 70cm, table dockable + eDrive, expérience Ambient",
+                maintenance: "Siemens 5-10 ans avec EcoPower",
+                energy: "10-12 kW (EcoPower + hélium optimisé)",
+                space: "18-20 m²",
+                applications: "GRASP-VIBE, cardio free-breathing, Whole-body <30 min, SliceAdjust",
+                strengths: ["Consommation la plus faible", "EcoPower", "Cardiologie avancée", "Whole-body rapide", "Expérience Ambient"],
+                weaknesses: ["Budget le plus élevé", "Bore standard 70cm"]
+            }
+        };
+
+        function calculateRecommendation() {
+            const budget = document.getElementById('budget').value;
+            const field = document.getElementById('field').value;
+            const space = document.getElementById('space').value;
+            const applications = document.getElementById('applications').value;
+            const comfort = document.getElementById('comfort').value;
+            const energy = document.getElementById('energy').value;
+
+            if (!budget || !field || !space || !applications || !comfort || !energy) {
+                alert('Veuillez remplir tous les critères pour obtenir une recommandation précise.');
+                return;
+            }
+
+            const recommendations = generateRecommendations(budget, field, space, applications, comfort, energy);
+            displayResults(recommendations);
+            
+            // Show comparison table
+            document.getElementById('comparisonTable').classList.remove('hidden');
+        }
+
+        function generateRecommendations(budget, field, space, applications, comfort, energy) {
+            let scores = {};
+            
+            // Initialize scores
+            Object.keys(irmData).forEach(model => {
+                scores[model] = 0;
+            });
+
+            // Budget scoring
+            if (budget === 'low') {
+                scores["Siemens MAGNETOM Altea"] += 3;
+                scores["GE SIGNA Champion 1.5T"] += 2;
+                scores["Siemens MAGNETOM Sola"] += 1;
+            } else if (budget === 'medium') {
+                scores["GE SIGNA Champion 1.5T"] += 3;
+                scores["Siemens MAGNETOM Altea"] += 2;
+                scores["Siemens MAGNETOM Sola"] += 2;
+            } else if (budget === 'high') {
+                scores["Siemens MAGNETOM Sola"] += 3;
+                scores["GE SIGNA Champion 1.5T"] += 2;
+                scores["Siemens MAGNETOM Altea"] += 1;
+            }
+
+            // Field strength (all are 1.5T, so equal)
+            if (field === '1.5T') {
+                Object.keys(scores).forEach(model => scores[model] += 2);
+            }
+
+            // Space requirements (all similar)
+            if (space !== 'small') {
+                Object.keys(scores).forEach(model => scores[model] += 1);
+            }
+
+            // Applications scoring
+            if (applications === 'neuro') {
+                scores["GE SIGNA Champion 1.5T"] += 3;
+                scores["Siemens MAGNETOM Altea"] += 2;
+                scores["Siemens MAGNETOM Sola"] += 2;
+            } else if (applications === 'general') {
+                scores["GE SIGNA Champion 1.5T"] += 3;
+                scores["Siemens MAGNETOM Altea"] += 2;
+                scores["Siemens MAGNETOM Sola"] += 1;
+            } else if (applications === 'cardio') {
+                scores["Siemens MAGNETOM Sola"] += 3;
+                scores["Siemens MAGNETOM Altea"] += 2;
+                scores["GE SIGNA Champion 1.5T"] += 2;
+            }
+
+            // Comfort scoring
+            if (comfort === 'high') {
+                scores["GE SIGNA Champion 1.5T"] += 3;
+                scores["Siemens MAGNETOM Sola"] += 2;
+                scores["Siemens MAGNETOM Altea"] += 1;
+            } else if (comfort === 'medium') {
+                scores["GE SIGNA Champion 1.5T"] += 2;
+                scores["Siemens MAGNETOM Sola"] += 2;
+                scores["Siemens MAGNETOM Altea"] += 2;
+            }
+
+            // Energy efficiency scoring
+            if (energy === 'eco') {
+                scores["Siemens MAGNETOM Sola"] += 3;
+                scores["Siemens MAGNETOM Altea"] += 2;
+                scores["GE SIGNA Champion 1.5T"] += 1;
+            } else if (energy === 'standard') {
+                scores["
